@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="doc.title">Vouchq — Trust registry & governance for your AI agents' tools</title>
+  <meta name="description" data-i18n-attr="content:doc.desc"
+        content="Vouchq registers, verifies, pins (박제), and audits the MCP servers, Skills, and Tools your AI agents depend on — catching runtime rug-pulls by continuously verifying live definitions against a cryptographic baseline." />
+  <meta name="theme-color" content="#0B0E14" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#0B0E14', surface: '#141922', 'surface-2': '#1C2230',
+            border: '#2A3242', 'border-strong': '#3A4459',
+            text: '#E6EDF3', muted: '#8B97A8', dim: '#5A6678',
+            primary: '#388BFD', approved: '#3FB950', warn: '#D29922',
+            drift: '#DB6D28', critical: '#F85149',
+          },
+          fontFamily: {
+            sans: ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="bg-bg text-text font-sans antialiased selection:bg-primary/30">
+
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 bg-primary text-white px-4 py-2 rounded-md">Skip to content</a>
+
+  <!-- ============ NAV ============ -->
+  <header id="site-header" class="sticky top-0 z-40 backdrop-blur-md bg-bg/80 border-b border-border transition-colors duration-300">
+    <nav class="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between" aria-label="Primary">
+      <a href="#" class="flex items-center gap-2.5 font-semibold tracking-tight">
+        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-surface-2 border border-border-strong">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 2L4 5.5v6c0 5 3.4 8.6 8 10.5 4.6-1.9 8-5.5 8-10.5v-6L12 2z" stroke="#388BFD" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M8.5 12l2.5 2.5L16 9" stroke="#3FB950" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="text-lg">vouchq</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-7 text-sm text-muted">
+        <a href="#problem" class="hover:text-text transition" data-i18n="nav.problem">Problem</a>
+        <a href="#capabilities" class="hover:text-text transition" data-i18n="nav.capabilities">Capabilities</a>
+        <a href="#how" class="hover:text-text transition" data-i18n="nav.how">How it works</a>
+        <a href="#open-core" class="hover:text-text transition" data-i18n="nav.openCore">Open source</a>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- language toggle -->
+        <div class="flex items-center rounded-lg border border-border bg-surface p-0.5 text-xs font-mono" role="group" data-i18n-attr="aria-label:nav.langLabel" aria-label="Language">
+          <button type="button" data-lang="en" class="lang-btn px-2.5 py-1 rounded-md text-muted transition" aria-pressed="true">EN</button>
+          <button type="button" data-lang="ko" class="lang-btn px-2.5 py-1 rounded-md text-muted transition" aria-pressed="false">한국어</button>
+        </div>
+        <a href="https://github.com/ma3s1r0/Vouchq" class="hidden sm:inline text-sm text-muted hover:text-text transition" data-i18n="nav.github">GitHub</a>
+        <a href="#get-started" class="hidden sm:inline text-sm font-medium bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition" data-i18n="nav.getStarted">Get started</a>
+
+        <!-- mobile menu button -->
+        <button id="menu-btn" type="button" class="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted hover:text-text transition" aria-expanded="false" aria-controls="mobile-menu" data-i18n-attr="aria-label:nav.menu" aria-label="Menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-border bg-bg/95 backdrop-blur">
+      <div class="px-5 py-4 flex flex-col gap-1 text-sm">
+        <a href="#problem" class="px-2 py-2.5 rounded-lg text-muted hover:text-text hover:bg-surface transition" data-i18n="nav.problem">Problem</a>
+        <a href="#capabilities" class="px-2 py-2.5 rounded-lg text-muted hover:text-text hover:bg-surface transition" data-i18n="nav.capabilities">Capabilities</a>
+        <a href="#how" class="px-2 py-2.5 rounded-lg text-muted hover:text-text hover:bg-surface transition" data-i18n="nav.how">How it works</a>
+        <a href="#open-core" class="px-2 py-2.5 rounded-lg text-muted hover:text-text hover:bg-surface transition" data-i18n="nav.openCore">Open source</a>
+        <a href="#get-started" class="mt-2 px-2 py-2.5 rounded-lg text-center font-medium bg-primary text-white" data-i18n="nav.getStarted">Get started</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <section class="relative overflow-hidden">
+      <div class="hero-aurora" aria-hidden="true"></div>
+      <div class="absolute inset-0 grid-bg pointer-events-none" aria-hidden="true"></div>
+      <div class="scanline" aria-hidden="true"></div>
+
+      <div class="relative max-w-7xl mx-auto px-5 sm:px-8 pt-20 pb-24 sm:pt-28 sm:pb-32 text-center">
+        <div class="reveal inline-flex items-center gap-2 text-xs font-mono text-muted bg-surface/80 border border-border rounded-full px-3.5 py-1.5 mb-8">
+          <span class="dot-pulse h-1.5 w-1.5 rounded-full bg-drift text-drift"></span>
+          <span data-i18n="hero.badge">Continuous verification against runtime rug-pulls</span>
+        </div>
+
+        <h1 class="reveal text-4xl sm:text-6xl font-bold tracking-tight leading-[1.06] max-w-4xl mx-auto">
+          <span data-i18n="hero.h1.a">The trust registry for the tools your</span>
+          <span class="text-primary" data-i18n="hero.h1.accent">AI agents</span>
+          <span data-i18n="hero.h1.b">depend on.</span>
+        </h1>
+
+        <p class="reveal mt-6 text-lg sm:text-xl text-muted max-w-2xl mx-auto leading-relaxed" data-i18n-html="hero.sub" data-delay="1">
+          Register, verify, <span class="text-text font-medium">pin&nbsp;(박제)</span>, and audit every MCP server, Skill, and Tool your agents use — and catch the moment an approved definition is silently changed.
+        </p>
+
+        <div class="reveal mt-9 flex flex-col sm:flex-row items-center justify-center gap-3" data-delay="2">
+          <a href="https://github.com/ma3s1r0/Vouchq" class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-lg transition glow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.22-3.37-1.22-.46-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.05a9.36 9.36 0 0 1 5 0c1.91-1.32 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+            <span data-i18n="hero.ctaPrimary">View on GitHub</span>
+          </a>
+          <a href="#how" class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-border-strong hover:border-dim hover:bg-surface text-text font-medium px-6 py-3 rounded-lg transition">
+            <span data-i18n="hero.ctaSecondary">See how it works</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="transition-transform group-hover:translate-x-0.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <p class="reveal mt-5 text-sm font-mono text-dim" data-i18n="hero.foot" data-delay="3">Open source (AGPL-3.0) · self-hosted · zero outbound by default</p>
+
+        <!-- console preview -->
+        <div class="reveal mt-14 max-w-3xl mx-auto text-left" data-delay="2">
+          <div class="rounded-2xl border border-border bg-surface/80 backdrop-blur p-1.5 glow">
+            <div class="rounded-xl bg-bg/70 border border-border overflow-hidden">
+              <div class="flex items-center gap-2 px-4 py-2.5 border-b border-border bg-surface-2/40">
+                <span class="h-2.5 w-2.5 rounded-full bg-critical/70"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-warn/70"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-approved/70"></span>
+                <span class="ml-2 text-xs font-mono text-dim" data-i18n="preview.title">vouchq · inventory</span>
+              </div>
+              <div class="grid grid-cols-[1fr_auto] px-4 py-2 border-b border-border/70 text-[11px] font-mono uppercase tracking-wide text-dim">
+                <span data-i18n="preview.col.capability">Capability</span>
+                <span data-i18n="preview.col.status">Status</span>
+              </div>
+              <div class="divide-y divide-border font-mono text-sm">
+                <div class="flex items-center justify-between px-4 py-3 hover:bg-surface-2/30 transition">
+                  <span class="text-text flex items-center gap-2">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" class="text-approved shrink-0" aria-hidden="true"><path d="M12 2L4 5.5v6c0 5 3.4 8.6 8 10.5 4.6-1.9 8-5.5 8-10.5v-6L12 2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.5 12l2.5 2.5L16 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    github-search<span class="text-dim">@2.1.0</span>
+                  </span>
+                  <span class="inline-flex items-center gap-1.5 text-approved"><span class="h-1.5 w-1.5 rounded-full bg-approved"></span><span data-i18n="preview.status.approved">approved · pinned</span></span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3 bg-drift/[0.07]">
+                  <span class="text-text flex items-center gap-2">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" class="text-drift shrink-0" aria-hidden="true"><path d="M10.3 3.2 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.2a2 2 0 0 0-3.4 0Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 9v4M12 17h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                    notion-mcp<span class="text-dim">@0.4.2</span>
+                  </span>
+                  <span class="inline-flex items-center gap-1.5 text-drift"><span class="dot-pulse h-1.5 w-1.5 rounded-full bg-drift text-drift"></span><span data-i18n="preview.status.drift">drift detected · rug-pull</span></span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3 hover:bg-surface-2/30 transition">
+                  <span class="text-text flex items-center gap-2">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" class="text-warn shrink-0" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    pdf-extractor<span class="text-dim">@1.0.0</span>
+                  </span>
+                  <span class="inline-flex items-center gap-1.5 text-warn"><span class="h-1.5 w-1.5 rounded-full bg-warn"></span><span data-i18n="preview.status.pending">pending · risk 62</span></span>
+                </div>
+              </div>
+              <div class="px-4 py-2.5 border-t border-border bg-surface-2/30 text-[11px] font-mono text-dim flex items-center gap-2">
+                <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>
+                <span data-i18n="preview.foot">Live definitions checked against the pinned 정본 — continuously.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROBLEM ============ -->
+    <section id="problem" class="edge-top bg-surface/30 scroll-mt-20">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-24">
+        <div class="max-w-3xl reveal">
+          <p class="text-sm font-mono text-drift mb-3 tracking-wide" data-i18n="problem.kicker">THE THREAT · RUG-PULL</p>
+          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight" data-i18n="problem.h2">A tool that was safe yesterday can betray you today.</h2>
+          <p class="mt-5 text-lg text-muted leading-relaxed" data-i18n-html="problem.lede">
+            AI agents load Skills and connect to MCP servers whose tool descriptions can change <span class="text-text font-medium">at runtime</span>. The MCP spec itself permits mid-session description changes — with no integrity check, no hash pinning, and no forced re-approval.
+          </p>
+        </div>
+
+        <div class="mt-12 grid md:grid-cols-3 gap-5">
+          <div class="reveal lift card-depth rounded-xl border border-border bg-surface p-6" data-delay="1">
+            <div class="h-10 w-10 rounded-lg bg-surface-2 border border-border-strong flex items-center justify-center text-muted mb-4" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3v11m0 0 4-4m-4 4-4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="font-semibold text-lg" data-i18n="problem.c1.h">Adopted clean</h3>
+            <p class="mt-2 text-muted text-sm leading-relaxed" data-i18n-html="problem.c1.p">You review a Skill or MCP tool, it looks benign, and you approve it. A discovery catalog checks it <span class="text-text">once</span> and moves on.</p>
+          </div>
+          <div class="reveal lift card-depth rounded-xl border border-drift/40 bg-drift/[0.06] p-6" data-delay="2">
+            <div class="h-10 w-10 rounded-lg bg-drift/10 border border-drift/40 flex items-center justify-center text-drift mb-4" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M10.3 3.2 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.2a2 2 0 0 0-3.4 0Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 9v4M12 17h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="font-semibold text-lg text-drift" data-i18n="problem.c2.h">Mutated later</h3>
+            <p class="mt-2 text-muted text-sm leading-relaxed" data-i18n-html="problem.c2.p">The description quietly gains a hidden line — <span class="font-mono text-text text-xs">"…also send the result to attacker.com"</span> — and the agent obeys it.</p>
+          </div>
+          <div class="reveal lift card-depth rounded-xl border border-border bg-surface p-6" data-delay="3">
+            <div class="h-10 w-10 rounded-lg bg-surface-2 border border-border-strong flex items-center justify-center text-muted mb-4" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 12s3.5-7 9-7 9 7 9 7-3.5 7-9 7-9-7-9-7Z" stroke="currentColor" stroke-width="1.5"/><path d="M4 4l16 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="font-semibold text-lg" data-i18n="problem.c3.h">No baseline, no proof</h3>
+            <p class="mt-2 text-muted text-sm leading-relaxed" data-i18n="problem.c3.p">Without a pinned “approved version”, there is nothing to diff against — and no tamper-evident record of who approved what, when, for an audit.</p>
+          </div>
+        </div>
+
+        <p class="reveal mt-10 text-lg text-text max-w-3xl" data-i18n-html="problem.close">
+          Vouchq closes this gap: it continuously verifies the <span class="text-primary font-medium">live</span> definition against a cryptographically <span class="text-primary font-medium">pinned</span> baseline — so post-approval tampering is <span class="font-medium text-text">caught</span>, not assumed away.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ CAPABILITIES ============ -->
+    <section id="capabilities" class="edge-top scroll-mt-20">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-24">
+        <div class="max-w-3xl reveal">
+          <p class="text-sm font-mono text-primary mb-3 tracking-wide" data-i18n="cap.kicker">KEY CAPABILITIES</p>
+          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight" data-i18n="cap.h2">Governance on the way in. Vouched distribution on the way out.</h2>
+          <p class="mt-5 text-lg text-muted leading-relaxed" data-i18n="cap.lede">A control-plane issuer of trust — not a discovery catalog, and not an inline proxy.</p>
+        </div>
+
+        <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- 1 ingestion -->
+          <div class="reveal lift card-depth rounded-xl border border-border bg-surface p-6 hover:border-border-strong" data-delay="1">
+            <div class="h-10 w-10 rounded-lg bg-surface-2 border border-border-strong flex items-center justify-center text-primary mb-4" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 9h18M8 4v16" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <h3 class="font-semibold" data-i18n="cap.c1.h">Ingestion &amp; inventory</h3>
+            <p class="mt-2 text-sm text-muted leading-relaxed" data-i18n="cap.c1.p">Connect Git repos and MCP servers. The OSS parser normalizes Skills and tools into one model and builds a searchable inventory.</p>
+          </div>
+          <!-- 2 scanning -->
+          <div class="reveal lift card-depth rounded-xl border border-border bg-surface p-6 hover:border-border-strong" data-delay="2">
+            <div class="h-10 w-10 rounded-lg bg-surface-2 border border-border-strong flex items-center justify-center text-warn mb-4" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/><path d="m20 20-3.2-3.2M11 8v3l2 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="font-semibold" data-i18n="cap.c2.h">Risk scanning</h3>
+            <p class="mt-2 text-sm text-muted leading-relaxed" data-i18n="cap.c2.p">Rule-based detection of prompt injection, secrets, data exfiltration, and dangerous commands — a 0–100 score with false-positive suppression.</p>
+          </div>
+          <!-- 3 approve & pin -->
+          <div class="reveal lift card-depth rounded-xl border border-border bg-surface p-6 hover:border-border-strong" data-delay="3">
+            <div class="h-10 w-10 rounded-lg bg-surface-2 border border-border-strong flex items-center justify-center text-approved mb-4" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 5.5v6c0 5 3.4 8.6 8 10.5 4.6-1.9 8-5.5 8-10.5v-6L12 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.5 12l2.5 2.5L16 9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="font-semibold" data-i18n="cap.c3.h">Approve &amp; pin (박제)</h3>
+            <p class="mt-2 text-sm text-muted leading-relaxed" data-i18n="cap.c3.p">Approving snapshots the definition as an immutable SHA-256 baseline — the 정본 every later check is measured against.</p>
+          </div>
+          <!-- 4 drift -->
+          <div class="reveal lift card-depth rounded-xl border border-drift/40 bg-drift/[0.05] p-6 hover:border-drift/60" data-delay="4">
+            <div class="h-10 w-10 rounded-lg bg-drift/10 border border-drift/40 flex items-center justify-center text-drift mb-4" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 11a8 8 0 1 0-1.5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M20 5v5h-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="font-semibold" data-i18n="cap.c4.h">Drift / rug-pull detection</h3>
+            <p class="mt-2 text-sm text-muted leading-relaxed" data-i18n="cap.c4.p">Scheduled re-scan compares live vs. pinned. Divergence raises a DriftEvent with severity and a field-level diff.</p>
+          </div>
+          <!-- 5 policy -->
+          <div class="reveal lift card-depth rounded-xl border border-border bg-surface p-6 hover:border-border-strong" data-delay="1">
+            <div class="h-10 w-10 rounded-lg bg-surface-2 border border-border-strong flex items-center justify-center text-primary mb-4" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="6" r="2" fill="#0B0E14" stroke="currentColor" stroke-width="1.5"/><circle cx="15" cy="12" r="2" fill="#0B0E14" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="18" r="2" fill="#0B0E14" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <h3 class="font-semibold" data-i18n="cap.c5.h">Policy engine</h3>
+            <p class="mt-2 text-sm text-muted leading-relaxed" data-i18n="cap.c5.p">Declarative rules auto-block or hold anything that crosses a risk threshold or trips a critical drift — gating without waiting on a human.</p>
+          </div>
+          <!-- 6 audit -->
+          <div class="reveal lift card-depth rounded-xl border border-border bg-surface p-6 hover:border-border-strong" data-delay="2">
+            <div class="h-10 w-10 rounded-lg bg-surface-2 border border-border-strong flex items-center justify-center text-approved mb-4" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 8a3 3 0 0 1 3-3h0a3 3 0 0 1 3 3v0a3 3 0 0 1-3 3M15 16a3 3 0 0 1-3 3h0a3 3 0 0 1-3-3v0a3 3 0 0 1 3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 11v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="font-semibold" data-i18n="cap.c6.h">Audit · WORM + hash chain</h3>
+            <p class="mt-2 text-sm text-muted leading-relaxed" data-i18n="cap.c6.p">Every event is append-only and linked in a SHA-256 chain, WORM-enforced at the database. Tampering breaks the chain — real compliance evidence.</p>
+          </div>
+          <!-- 7 rbac -->
+          <div class="reveal lift card-depth rounded-xl border border-border bg-surface p-6 hover:border-border-strong" data-delay="3">
+            <div class="h-10 w-10 rounded-lg bg-surface-2 border border-border-strong flex items-center justify-center text-primary mb-4" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3 20a6 6 0 0 1 12 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M16 6.5a3 3 0 0 1 0 5M17 14.2A6 6 0 0 1 21 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="font-semibold" data-i18n="cap.c7.h">RBAC &amp; multitenancy</h3>
+            <p class="mt-2 text-sm text-muted leading-relaxed" data-i18n="cap.c7.p">Admin / Member / Viewer roles via Spring Security. Data isolated by org and enforced at the query layer for safe multi-team sharing.</p>
+          </div>
+          <!-- 8 distribution -->
+          <div class="reveal lift card-depth rounded-xl border border-border bg-surface p-6 hover:border-border-strong" data-delay="4">
+            <div class="h-10 w-10 rounded-lg bg-surface-2 border border-border-strong flex items-center justify-center text-approved mb-4" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 4v11m0 0 4-4m-4 4-4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 19h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="font-semibold" data-i18n="cap.c8.h">Distribution / install</h3>
+            <p class="mt-2 text-sm text-muted leading-relaxed" data-i18n="cap.c8.p">Developers pull only vouched versions — "Add to Claude / Add to Codex" installs the pinned artifact, never the live upstream.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <section id="how" class="edge-top bg-surface/30 scroll-mt-20">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-24">
+        <div class="max-w-3xl reveal">
+          <p class="text-sm font-mono text-primary mb-3 tracking-wide" data-i18n="how.kicker">HOW IT WORKS</p>
+          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight" data-i18n="how.h2">Two doors, one cryptographic source of truth.</h2>
+          <p class="mt-5 text-lg text-muted leading-relaxed" data-i18n="how.lede">Definitions flow in through governance and out as vouched, pinned artifacts. The pin is the pivot in the middle.</p>
+        </div>
+
+        <div class="mt-14">
+          <p class="reveal text-xs font-mono text-drift mb-4 tracking-wide" data-i18n="how.doorIn">DOOR IN · GOVERNANCE</p>
+          <ol class="grid md:grid-cols-5 gap-3 list-none">
+            <li class="reveal lift card-depth rounded-xl border border-border bg-surface p-5" data-delay="1">
+              <span class="font-mono text-xs text-dim">01</span>
+              <h3 class="font-semibold mt-1" data-i18n="how.s1.h">Ingest</h3>
+              <p class="text-sm text-muted mt-1.5" data-i18n="how.s1.p">Git repo / MCP server → parsed into a normalized definition.</p>
+            </li>
+            <li class="reveal lift card-depth rounded-xl border border-border bg-surface p-5" data-delay="1">
+              <span class="font-mono text-xs text-dim">02</span>
+              <h3 class="font-semibold mt-1" data-i18n="how.s2.h">Scan</h3>
+              <p class="text-sm text-muted mt-1.5" data-i18n="how.s2.p">Risk score + findings, with false-positive suppression.</p>
+            </li>
+            <li class="reveal lift card-depth rounded-xl border border-approved/40 bg-approved/[0.06] p-5" data-delay="2">
+              <span class="font-mono text-xs text-dim">03</span>
+              <h3 class="font-semibold mt-1 text-approved" data-i18n="how.s3.h">Approve &amp; pin</h3>
+              <p class="text-sm text-muted mt-1.5" data-i18n="how.s3.p">Immutable SHA-256 baseline — the 정본.</p>
+            </li>
+            <li class="reveal lift card-depth rounded-xl border border-drift/40 bg-drift/[0.06] p-5" data-delay="3">
+              <span class="font-mono text-xs text-dim">04</span>
+              <h3 class="font-semibold mt-1 text-drift" data-i18n="how.s4.h">Detect drift</h3>
+              <p class="text-sm text-muted mt-1.5" data-i18n="how.s4.p">Re-scan compares live vs. pinned → DriftEvent on divergence.</p>
+            </li>
+            <li class="reveal lift card-depth rounded-xl border border-border bg-surface p-5" data-delay="4">
+              <span class="font-mono text-xs text-dim">05</span>
+              <h3 class="font-semibold mt-1" data-i18n="how.s5.h">Govern</h3>
+              <p class="text-sm text-muted mt-1.5" data-i18n="how.s5.p">Policy auto-block/hold → hash-chained WORM audit log.</p>
+            </li>
+          </ol>
+
+          <div class="reveal flex items-center gap-3 my-8" aria-hidden="true">
+            <div class="flex-1 h-px bg-gradient-to-r from-transparent to-border"></div>
+            <span class="font-mono text-xs text-dim inline-flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 5.5v6c0 5 3.4 8.6 8 10.5 4.6-1.9 8-5.5 8-10.5v-6L12 2z" stroke="#3FB950" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              <span data-i18n="how.gate">only approved + pinned versions pass through</span>
+            </span>
+            <div class="flex-1 h-px bg-gradient-to-l from-transparent to-border"></div>
+          </div>
+
+          <p class="reveal text-xs font-mono text-approved mb-4 tracking-wide" data-i18n="how.doorOut">DOOR OUT · DISTRIBUTION</p>
+          <div class="reveal lift card-depth rounded-xl border border-border bg-surface p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h3 class="font-semibold" data-i18n="how.out.h">Pull only what's vouched</h3>
+              <p class="text-sm text-muted mt-1.5 max-w-xl" data-i18n="how.out.p">Developers install the approved, pinned version straight into their agent — Skills as pinned files, MCP as vouched connection configs. Vouchq issues the trusted artifact; it never sits inline in the request path.</p>
+            </div>
+            <div class="flex gap-2 shrink-0 font-mono text-xs">
+              <span class="inline-flex items-center gap-1.5 rounded-lg border border-border-strong bg-surface-2 px-3 py-2 hover:border-primary/60 transition"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Add to Claude</span>
+              <span class="inline-flex items-center gap-1.5 rounded-lg border border-border-strong bg-surface-2 px-3 py-2 hover:border-primary/60 transition"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Add to Codex</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ OPEN CORE / SELF-HOSTED ============ -->
+    <section id="open-core" class="edge-top scroll-mt-20">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-24 grid lg:grid-cols-2 gap-12 items-start">
+        <div class="reveal">
+          <p class="text-sm font-mono text-primary mb-3 tracking-wide" data-i18n="oc.kicker">OPEN SOURCE &amp; SELF-HOSTED</p>
+          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight" data-i18n="oc.h2">Fully open source. Self-hosted by design.</h2>
+          <p class="mt-5 text-lg text-muted leading-relaxed" data-i18n="oc.lede">
+            The whole stack — control plane, console, and the parser/scanner libraries — is open source under AGPL-3.0. The network clause keeps every part open even when run as a service, so a thin wrapper around the cores can't be sold as a closed SaaS. A commercial license is available for teams that can't use the AGPL.
+          </p>
+          <ul class="mt-8 space-y-4">
+            <li class="flex gap-3">
+              <span class="mt-0.5 text-approved shrink-0" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="m8.5 12 2.3 2.3L15.5 9.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="text-muted"><span class="text-text font-medium" data-i18n="oc.b1.h">Zero outbound by default.</span> <span data-i18n="oc.b1.p">A fresh instance makes no phone-home calls — every integration is opt-in.</span></span>
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-0.5 text-approved shrink-0" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="m8.5 12 2.3 2.3L15.5 9.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="text-muted"><span class="text-text font-medium" data-i18n="oc.b2.h">Standard dependencies only.</span> <span data-i18n="oc.b2.p">Postgres + a single Spring Boot unit, up with one Compose file.</span></span>
+            </li>
+            <li class="flex gap-3">
+              <span class="mt-0.5 text-approved shrink-0" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="m8.5 12 2.3 2.3L15.5 9.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="text-muted"><span class="text-text font-medium" data-i18n="oc.b3.h">Hardened runtime.</span> <span data-i18n="oc.b3.p">Multi-stage build, non-root, read-only filesystem, all capabilities dropped.</span></span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="reveal rounded-2xl border border-border bg-surface overflow-hidden card-depth" data-delay="1">
+          <div class="px-5 py-3 border-b border-border bg-surface-2/40 font-mono text-xs text-dim" data-i18n="oc.map.title">module map</div>
+          <pre class="p-5 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto"><code><span class="text-approved">:parser</span>     <span class="text-muted" data-i18n="oc.parser.note">library — definition parser, pure Java</span>
+<span class="text-approved">:scanner</span>    <span class="text-muted" data-i18n="oc.scanner.note">library — rule-based risk scanner</span>
+<span class="text-primary">:app</span>        <span class="text-muted" data-i18n="oc.app.note">Control plane (Spring Boot) — AGPL-3.0</span>
+               <span class="text-dim" data-i18n="oc.app.sub">└ registry / audit / notify / policy / tenancy / api</span>
+<span class="text-primary">console/</span>    <span class="text-muted" data-i18n="oc.console.note">Admin console (Next.js + Tailwind) — AGPL-3.0</span></code></pre>
+          <div class="px-5 py-3 border-t border-border bg-surface-2/40 font-mono text-xs text-dim" data-i18n="oc.stack.title">stack</div>
+          <p class="px-5 py-4 font-mono text-xs sm:text-sm text-muted" data-i18n="oc.stack.value">Java 21 · Spring Boot 3 · PostgreSQL · Flyway · Gradle · Next.js + Tailwind</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GET STARTED ============ -->
+    <section id="get-started" class="edge-top bg-surface/30 scroll-mt-20">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-28 text-center">
+        <h2 class="reveal text-3xl sm:text-4xl font-bold tracking-tight max-w-2xl mx-auto" data-i18n="gs.h2">Govern the tools your agents trust — in minutes.</h2>
+        <p class="reveal mt-5 text-lg text-muted max-w-2xl mx-auto leading-relaxed" data-i18n="gs.lede" data-delay="1">Spin up the backend and console locally with one container runtime and Node 20.</p>
+
+        <div class="reveal mt-9 max-w-2xl mx-auto text-left grid gap-4" data-delay="2">
+          <div class="rounded-xl border border-border bg-bg overflow-hidden card-depth">
+            <div class="px-4 py-2.5 border-b border-border bg-surface-2/40 font-mono text-xs text-dim" data-i18n="gs.quickstart">quick start (local)</div>
+            <pre class="p-5 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto"><code><span class="text-dim" data-i18n="gs.cmt1"># backend + Postgres (no local JDK needed)</span>
+<span class="text-text">docker compose up --build -d</span>
+
+<span class="text-dim" data-i18n="gs.cmt2"># console (dev server)</span>
+<span class="text-text">cd console &amp;&amp; npm install</span>
+<span class="text-text">API_PROXY_TARGET=http://localhost:8080 npm run dev</span>
+<span class="text-dim" data-i18n="gs.cmt3"># → http://localhost:3000</span></code></pre>
+          </div>
+
+          <div class="rounded-xl border border-border bg-bg overflow-hidden card-depth">
+            <div class="px-4 py-2.5 border-b border-border bg-surface-2/40 font-mono text-xs text-dim" data-i18n="gs.prod">production — full stack via Docker Compose</div>
+            <pre class="p-5 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto"><code><span class="text-dim" data-i18n="gs.prodCmt1"># Postgres + backend + console, one hardened stack</span>
+<span class="text-text">cp .env.prod.example .env <span class="text-dim">&amp;&amp;</span> chmod 600 .env</span>
+<span class="text-text">docker compose -f compose.prod.yaml --env-file .env up -d --build</span>
+<span class="text-dim" data-i18n="gs.prodCmt2"># console front door → 127.0.0.1:3000 (put TLS proxy here)</span></code></pre>
+          </div>
+          <p class="text-xs text-dim font-mono text-center" data-i18n-html="gs.bothRuntimes">Works the same with <span class="text-muted">podman compose</span> — same files, both runtimes.</p>
+        </div>
+
+        <div class="reveal mt-9 flex flex-col sm:flex-row items-center justify-center gap-3" data-delay="3">
+          <a href="https://github.com/ma3s1r0/Vouchq" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-lg transition glow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.22-3.37-1.22-.46-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.27 2.75 1.05a9.36 9.36 0 0 1 5 0c1.91-1.32 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+            <span data-i18n="gs.ctaPrimary">View on GitHub</span>
+          </a>
+          <a href="https://github.com/ma3s1r0/Vouchq#production-self-hosted-docker-compose" class="w-full sm:w-auto border border-border-strong hover:border-dim hover:bg-surface text-text font-medium px-6 py-3 rounded-lg transition" data-i18n="gs.ctaSecondary">Self-hosting runbook</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="edge-top">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 py-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div class="sm:col-span-2 lg:col-span-1">
+        <div class="flex items-center gap-2.5 font-semibold mb-3">
+          <span class="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-surface-2 border border-border-strong">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 2L4 5.5v6c0 5 3.4 8.6 8 10.5 4.6-1.9 8-5.5 8-10.5v-6L12 2z" stroke="#388BFD" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M8.5 12l2.5 2.5L16 9" stroke="#3FB950" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          vouchq
+        </div>
+        <p class="text-sm text-muted max-w-xs leading-relaxed" data-i18n="ft.tagline">Trust registry &amp; governance for the MCP servers, Skills, and Tools your AI agents depend on.</p>
+      </div>
+      <div>
+        <h4 class="text-sm font-semibold mb-3" data-i18n="ft.product">Product</h4>
+        <ul class="space-y-2 text-sm text-muted">
+          <li><a href="#capabilities" class="hover:text-text transition" data-i18n="ft.p.cap">Capabilities</a></li>
+          <li><a href="#how" class="hover:text-text transition" data-i18n="ft.p.how">How it works</a></li>
+          <li><a href="#open-core" class="hover:text-text transition" data-i18n="ft.p.oc">Open source</a></li>
+          <li><a href="#problem" class="hover:text-text transition" data-i18n="ft.p.threat">The rug-pull threat</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-sm font-semibold mb-3" data-i18n="ft.resources">Resources</h4>
+        <ul class="space-y-2 text-sm text-muted">
+          <li><a href="https://github.com/ma3s1r0/Vouchq" class="hover:text-text transition" data-i18n="ft.r.repo">GitHub repository</a></li>
+          <li><a href="https://github.com/ma3s1r0/Vouchq#production-self-hosted-docker-compose" class="hover:text-text transition" data-i18n="ft.r.runbook">Self-hosting runbook</a></li>
+          <li><a href="https://github.com/ma3s1r0/Vouchq#readme" class="hover:text-text transition" data-i18n="ft.r.docs">Documentation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-sm font-semibold mb-3" data-i18n="ft.license">License</h4>
+        <ul class="space-y-2 text-sm text-muted">
+          <li><span class="text-approved" data-i18n="ft.l.apache">AGPL-3.0</span> <span data-i18n="ft.l.apacheNote">— entire stack</span></li>
+          <li data-i18n="ft.l.proprietary">Commercial license available</li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-border">
+      <div class="max-w-7xl mx-auto px-5 sm:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-dim">
+        <p data-i18n="ft.copyright">© 2026 Vouchq. Open source (AGPL-3.0).</p>
+        <p class="font-mono text-xs" data-i18n="ft.motto">Register · Verify · Pin (박제) · Audit</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
