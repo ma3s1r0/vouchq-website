@@ -75,7 +75,7 @@ const I18N = {
     "cap.c7.h": "RBAC & multitenancy",
     "cap.c7.p": "Admin / Member / Viewer roles via Spring Security. Data isolated by org and enforced at the query layer for safe multi-team sharing.",
     "cap.c8.h": "Distribution / install",
-    "cap.c8.p": 'Developers pull only vouched versions — "Add to Claude / Add to Codex" installs the pinned artifact, never the live upstream.',
+    "cap.c8.p": 'Developers pull only vouched versions. Each source group has a one-click install — a hash-verified <span class="font-mono">curl | sh</span> that drops the pinned skill files into <span class="font-mono">.claude/skills/</span>, never the live upstream.',
 
     // how it works
     "how.kicker": "HOW IT WORKS",
@@ -95,7 +95,7 @@ const I18N = {
     "how.gate": "only approved + pinned versions pass through",
     "how.doorOut": "DOOR OUT · DISTRIBUTION",
     "how.out.h": "Pull only what's vouched",
-    "how.out.p": "Developers install the approved, pinned version straight into their agent — Skills as pinned files, MCP as vouched connection configs. Vouchq issues the trusted artifact; it never sits inline in the request path.",
+    "how.out.p": 'Developers install the approved, pinned version straight into their agent — a one-click install emits a hash-verified <span class="font-mono">curl | sh</span> that writes a source\'s skills into <span class="font-mono">.claude/skills/</span>, MCP as vouched connection configs. Every install is logged to the WORM audit. Vouchq issues the trusted artifact; it never sits inline in the request path.',
 
     // open core
     "oc.kicker": "OPEN SOURCE & SELF-HOSTED",
@@ -211,7 +211,7 @@ const I18N = {
     "cap.c7.h": "RBAC & 멀티테넌시",
     "cap.c7.p": "Spring Security 기반 Admin / Member / Viewer 역할. 데이터는 org로 격리되고 쿼리 레벨에서 강제되어 안전한 다중 팀 공유가 됩니다.",
     "cap.c8.h": "배포 / 설치",
-    "cap.c8.p": '개발자는 vouched된 버전만 가져옵니다 — "Add to Claude / Add to Codex"가 라이브 upstream이 아닌 박제된 아티팩트를 설치합니다.',
+    "cap.c8.p": '개발자는 vouched된 버전만 가져옵니다. 소스 그룹마다 원클릭 설치가 있고 — 해시 검증되는 <span class="font-mono">curl | sh</span> 한 줄이 박제된 스킬 파일을 <span class="font-mono">.claude/skills/</span> 에 떨궈줍니다. 라이브 upstream이 아니라요.',
 
     "how.kicker": "동작 방식",
     "how.h2": "두 개의 문, 하나의 암호학적 진실.",
@@ -230,7 +230,7 @@ const I18N = {
     "how.gate": "승인·박제된 버전만 통과합니다",
     "how.doorOut": "나가는 문 · 배포",
     "how.out.h": "vouched된 것만 가져가기",
-    "how.out.p": "개발자는 승인·박제된 버전을 곧장 에이전트에 설치합니다 — Skill은 박제 파일로, MCP는 vouched 연결 설정으로. Vouchq는 신뢰된 아티팩트를 발급할 뿐, 요청 경로에 인라인으로 끼어들지 않습니다.",
+    "how.out.p": '개발자는 승인·박제된 버전을 곧장 에이전트에 설치합니다 — 원클릭 설치가 해시 검증되는 <span class="font-mono">curl | sh</span> 한 줄을 만들어 소스의 스킬을 <span class="font-mono">.claude/skills/</span> 에 기록하고, MCP는 vouched 연결 설정으로 설치됩니다. 모든 설치는 WORM 감사 로그에 남습니다. Vouchq는 신뢰된 아티팩트를 발급할 뿐, 요청 경로에 인라인으로 끼어들지 않습니다.',
 
     "oc.kicker": "오픈소스 & SELF-HOSTED",
     "oc.h2": "완전 오픈소스. 설계부터 self-hosted.",

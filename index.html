@@ -296,7 +296,7 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 4v11m0 0 4-4m-4 4-4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 19h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
             </div>
             <h3 class="font-semibold" data-i18n="cap.c8.h">Distribution / install</h3>
-            <p class="mt-2 text-sm text-muted leading-relaxed" data-i18n="cap.c8.p">Developers pull only vouched versions — "Add to Claude / Add to Codex" installs the pinned artifact, never the live upstream.</p>
+            <p class="mt-2 text-sm text-muted leading-relaxed" data-i18n-html="cap.c8.p">Developers pull only vouched versions. Each source group has a one-click install — a hash-verified <span class="font-mono">curl | sh</span> that drops the pinned skill files into <span class="font-mono">.claude/skills/</span>, never the live upstream.</p>
           </div>
         </div>
       </div>
@@ -354,9 +354,10 @@
           <div class="reveal lift card-depth rounded-xl border border-border bg-surface p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <h3 class="font-semibold" data-i18n="how.out.h">Pull only what's vouched</h3>
-              <p class="text-sm text-muted mt-1.5 max-w-xl" data-i18n="how.out.p">Developers install the approved, pinned version straight into their agent — Skills as pinned files, MCP as vouched connection configs. Vouchq issues the trusted artifact; it never sits inline in the request path.</p>
+              <p class="text-sm text-muted mt-1.5 max-w-xl" data-i18n-html="how.out.p">Developers install the approved, pinned version straight into their agent — a one-click install emits a hash-verified <span class="font-mono">curl | sh</span> that writes a source's skills into <span class="font-mono">.claude/skills/</span>, MCP as vouched connection configs. Every install is logged to the WORM audit. Vouchq issues the trusted artifact; it never sits inline in the request path.</p>
             </div>
-            <div class="flex gap-2 shrink-0 font-mono text-xs">
+            <div class="flex flex-wrap gap-2 shrink-0 font-mono text-xs">
+              <span class="inline-flex items-center gap-1.5 rounded-lg border border-border-strong bg-surface-2 px-3 py-2 text-primary"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 17l6-6-6-6m8 14h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>curl | sh</span>
               <span class="inline-flex items-center gap-1.5 rounded-lg border border-border-strong bg-surface-2 px-3 py-2 hover:border-primary/60 transition"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Add to Claude</span>
               <span class="inline-flex items-center gap-1.5 rounded-lg border border-border-strong bg-surface-2 px-3 py-2 hover:border-primary/60 transition"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Add to Codex</span>
             </div>
