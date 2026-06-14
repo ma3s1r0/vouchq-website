@@ -24,9 +24,9 @@ const I18N = {
 
     // hero
     "hero.badge": "Continuous verification against runtime rug-pulls",
-    "hero.h1.a": "The trust registry for the tools your",
-    "hero.h1.accent": "AI agents",
-    "hero.h1.b": "depend on.",
+    "hero.h1.a": "The private trust registry for",
+    "hero.h1.accent": "MCP tools.",
+    "hero.h1.b": "Approve once. Pin. Detect rug-pulls forever.",
     "hero.sub": 'Register, verify, <span class="text-text font-medium">pin&nbsp;(박제)</span>, and audit every MCP server, Skill, and Tool your agents use — and catch the moment an approved definition is silently changed.',
     "hero.ctaPrimary": "View on GitHub",
     "hero.ctaSecondary": "See how it works",
@@ -159,9 +159,9 @@ const I18N = {
     "nav.menu": "메뉴",
 
     "hero.badge": "런타임 rug-pull에 맞선 지속 검증",
-    "hero.h1.a": "당신의",
-    "hero.h1.accent": "AI 에이전트",
-    "hero.h1.b": "가 의존하는 도구를 위한 신뢰 레지스트리.",
+    "hero.h1.a": "MCP 도구를 위한",
+    "hero.h1.accent": "프라이빗 신뢰 레지스트리.",
+    "hero.h1.b": "한 번 승인하고, 박제하고, rug-pull을 영구히 탐지.",
     "hero.sub": '에이전트가 쓰는 모든 MCP 서버·Skill·Tool을 등록·검증·<span class="text-text font-medium">박제(pin)</span>·감사하고 — 승인된 정의가 몰래 바뀌는 바로 그 순간을 잡아냅니다.',
     "hero.ctaPrimary": "GitHub에서 보기",
     "hero.ctaSecondary": "동작 방식 보기",
