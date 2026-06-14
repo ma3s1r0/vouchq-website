@@ -4,6 +4,8 @@ A self-contained marketing landing page for **Vouchq** (the trust registry &
 governance plane for the MCP servers, Skills, and Tools AI agents depend on).
 Bilingual (English default · 한국어), dark "Control Room" brand, no build step.
 
+**Live:** https://vouchq.is-a.dev (GitHub Pages; also https://ma3s1r0.github.io/vouchq-website/). Auto-deploys on every push to `master`.
+
 ## Stack
 
 - **`index.html`** — markup + Tailwind config. No build step.
