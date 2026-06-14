@@ -392,7 +392,7 @@
 
         <div class="reveal rounded-2xl border border-border bg-surface overflow-hidden card-depth" data-delay="1">
           <div class="px-5 py-3 border-b border-border bg-surface-2/40 font-mono text-xs text-dim" data-i18n="oc.map.title">module map</div>
-          <pre class="p-5 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto"><code><span class="text-approved">:parser</span>     <span class="text-muted" data-i18n="oc.parser.note">library — definition parser, pure Java</span>
+          <pre class="p-5 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto whitespace-pre-wrap break-words"><code><span class="text-approved">:parser</span>     <span class="text-muted" data-i18n="oc.parser.note">library — definition parser, pure Java</span>
 <span class="text-approved">:scanner</span>    <span class="text-muted" data-i18n="oc.scanner.note">library — rule-based risk scanner</span>
 <span class="text-primary">:app</span>        <span class="text-muted" data-i18n="oc.app.note">Control plane (Spring Boot) — AGPL-3.0</span>
                <span class="text-dim" data-i18n="oc.app.sub">└ registry / audit / notify / policy / tenancy / api</span>
@@ -412,7 +412,7 @@
         <div class="reveal mt-9 max-w-2xl mx-auto text-left grid gap-4" data-delay="2">
           <div class="rounded-xl border border-border bg-bg overflow-hidden card-depth">
             <div class="px-4 py-2.5 border-b border-border bg-surface-2/40 font-mono text-xs text-dim" data-i18n="gs.quickstart">quick start (local)</div>
-            <pre class="p-5 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto"><code><span class="text-dim" data-i18n="gs.cmt1"># backend + Postgres (no local JDK needed)</span>
+            <pre class="p-5 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto whitespace-pre-wrap break-words"><code><span class="text-dim" data-i18n="gs.cmt1"># backend + Postgres (no local JDK needed)</span>
 <span class="text-text">docker compose up --build -d</span>
 
 <span class="text-dim" data-i18n="gs.cmt2"># console (dev server)</span>
@@ -423,7 +423,7 @@
 
           <div class="rounded-xl border border-border bg-bg overflow-hidden card-depth">
             <div class="px-4 py-2.5 border-b border-border bg-surface-2/40 font-mono text-xs text-dim" data-i18n="gs.prod">production — full stack via Docker Compose</div>
-            <pre class="p-5 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto"><code><span class="text-dim" data-i18n="gs.prodCmt1"># Postgres + backend + console, one hardened stack</span>
+            <pre class="p-5 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto whitespace-pre-wrap break-words"><code><span class="text-dim" data-i18n="gs.prodCmt1"># Postgres + backend + console, one hardened stack</span>
 <span class="text-text">cp .env.prod.example .env <span class="text-dim">&amp;&amp;</span> chmod 600 .env</span>
 <span class="text-text">docker compose -f compose.prod.yaml --env-file .env up -d --build</span>
 <span class="text-dim" data-i18n="gs.prodCmt2"># console front door → 127.0.0.1:3000 (put TLS proxy here)</span></code></pre>
