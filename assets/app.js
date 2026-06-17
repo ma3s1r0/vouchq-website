@@ -99,7 +99,7 @@ const I18N = {
     "how.s5.p": "Policy auto-block/hold → hash-chained WORM audit log.",
     "how.gate": "only approved + pinned versions pass through",
     "how.doorOut": "DOOR OUT · DISTRIBUTION",
-    "how.out.h": "Pull only what's vouched",
+    "how.out.h": "Install only what's vouched",
     "how.out.p": 'Developers install the approved, pinned version straight into their agent — a one-click install emits a hash-verified <span class="font-mono">curl | sh</span> that writes a source\'s skills into Claude or Cursor, with remote MCP servers as vouched connection configs. Every install is logged to the WORM audit. Vouchq issues the trusted artifact; it never sits inline in the request path.',
 
     // open core
@@ -239,7 +239,7 @@ const I18N = {
     "how.s5.p": "정책이 자동 차단/보류 → 해시 체인 WORM 감사 로그.",
     "how.gate": "승인·박제된 버전만 통과합니다",
     "how.doorOut": "나가는 문 · 배포",
-    "how.out.h": "vouched된 것만 가져가기",
+    "how.out.h": "보증된 것만 골라 설치",
     "how.out.p": '개발자는 승인·박제된 버전을 곧장 에이전트에 설치합니다. 원클릭 설치가 해시 검증되는 <span class="font-mono">curl | sh</span> 한 줄을 만들어 소스의 스킬을 Claude·Cursor에 기록하고, 원격 MCP 서버는 보증된 연결 설정으로 붙입니다. 모든 설치는 WORM 감사 로그에 남습니다. Vouchq는 신뢰된 아티팩트를 발급할 뿐, 요청 경로엔 끼어들지 않습니다.',
 
     "oc.kicker": "오픈소스 & SELF-HOSTED",
