@@ -215,7 +215,7 @@ const I18N = {
     "cap.c7.h": "RBAC & 멀티테넌시",
     "cap.c7.p": "Spring Security로 Admin / Member / Viewer 역할을 나눕니다. 데이터는 org 단위로 격리되고 쿼리 레벨에서 강제돼, 여러 팀이 한 배포를 안전하게 공유합니다.",
     "cap.c8.h": "배포 / 설치",
-    "cap.c8.p": '개발자는 보증된 버전만 받습니다. 소스 그룹마다 원클릭 설치가 있어서, 해시 검증되는 <span class="font-mono">curl | sh</span> 한 줄로 Claude·Cursor(스킬)에 설치하고 원격 MCP 서버는 보증된 설정으로 붙입니다. 라이브 업스트림이 아니고요.',
+    "cap.c8.p": '개발자는 라이브 업스트림이 아니라 보증된 버전만 받습니다. 소스 그룹마다 원클릭 설치가 있어서, 해시 검증되는 <span class="font-mono">curl | sh</span> 한 줄로 Claude·Cursor(스킬)에 설치하고 원격 MCP 서버는 보증된 설정으로 붙입니다.',
     "cap.c9.h": "CI 검증 / 빌드 게이트",
     "cap.c9.p": '스킬이 승인·박제된 버전이 아니면 read-only GitHub Action이 빌드를 실패시킵니다(<span class="font-mono">CHANGED</span> / <span class="font-mono">BLOCKED</span> / <span class="font-mono">UNKNOWN</span>). 미승인 기능은 들어오는 길목에서 막힙니다.',
     "cap.c10.h": "자가 거버넌스 룰셋",
@@ -259,7 +259,7 @@ const I18N = {
     "oc.stack.value": "Java 21 · Spring Boot 3 · PostgreSQL · Flyway · Gradle · Next.js + Tailwind",
 
     "gs.h2": "에이전트가 믿고 쓰는 도구, 몇 분이면 통제합니다.",
-    "gs.lede": "컨테이너 런타임 하나와 Node 20이면 로컬에서 바로 띄웁니다. 프로덕션은 Docker Compose로 전체 스택을 한 번에 배포하고요.",
+    "gs.lede": "컨테이너 런타임 하나와 Node 20이면 로컬에서 바로 띄웁니다. 프로덕션은 Docker Compose로 전체 스택을 한 번에 배포합니다.",
     "gs.quickstart": "빠른 시작 (로컬)",
     "gs.cmt1": "# 백엔드 + Postgres (로컬 JDK 불필요)",
     "gs.cmt2": "# 콘솔 (개발 서버)",
