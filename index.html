@@ -296,7 +296,23 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 4v11m0 0 4-4m-4 4-4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 19h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
             </div>
             <h3 class="font-semibold" data-i18n="cap.c8.h">Distribution / install</h3>
-            <p class="mt-2 text-sm text-muted leading-relaxed" data-i18n-html="cap.c8.p">Developers pull only vouched versions. Each source group has a one-click install — a hash-verified <span class="font-mono">curl | sh</span> that drops the pinned skill files into <span class="font-mono">.claude/skills/</span>, never the live upstream.</p>
+            <p class="mt-2 text-sm text-muted leading-relaxed" data-i18n-html="cap.c8.p">Developers pull only vouched versions. Each source group has a one-click install — a hash-verified <span class="font-mono">curl | sh</span> for Claude or Cursor (skills) and a vouched config for remote MCP servers, never the live upstream.</p>
+          </div>
+          <!-- 9 ci verify -->
+          <div class="reveal lift card-depth rounded-xl border border-border bg-surface p-6 hover:border-border-strong" data-delay="4">
+            <div class="h-10 w-10 rounded-lg bg-surface-2 border border-border-strong flex items-center justify-center text-approved mb-4" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3 4 6v6c0 4.5 3.4 7.3 8 9 4.6-1.7 8-4.5 8-9V6l-8-3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="font-semibold" data-i18n="cap.c9.h">CI verify / build gate</h3>
+            <p class="mt-2 text-sm text-muted leading-relaxed" data-i18n-html="cap.c9.p">A read-only GitHub Action fails the build when a skill isn't an approved, pinned version — <span class="font-mono">CHANGED</span> / <span class="font-mono">BLOCKED</span> / <span class="font-mono">UNKNOWN</span>. Unapproved capabilities are stopped on the way in.</p>
+          </div>
+          <!-- 10 sentinel -->
+          <div class="reveal lift card-depth rounded-xl border border-border bg-surface p-6 hover:border-border-strong" data-delay="4">
+            <div class="h-10 w-10 rounded-lg bg-surface-2 border border-border-strong flex items-center justify-center text-approved mb-4" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3 4 6v6c0 4.5 3.4 7.3 8 9 4.6-1.7 8-4.5 8-9V6l-8-3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 8.5v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="15.5" r="0.6" fill="currentColor"/></svg>
+            </div>
+            <h3 class="font-semibold" data-i18n="cap.c10.h">Self-governing ruleset</h3>
+            <p class="mt-2 text-sm text-muted leading-relaxed" data-i18n-html="cap.c10.p">Vouchq continuously canary-tests its own scanner. If a rule is weakened — by a PR or a tamper — it <span class="font-mono">fails closed</span>: approvals suspend until detection is proven again.</p>
           </div>
         </div>
       </div>
